@@ -1,37 +1,46 @@
 package com.william.myproject.productManager;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.*;
 
 public class ProductFactory {
-    //  private Product product;
-    // private Product product;
+
     private HashMap<Product, List<Review>> products = new HashMap<>();
-    private Locale locale;
-    private ResourceBundle resources;
-    private DateTimeFormatter dateFormat;
-    private NumberFormat moneyFormat;
+    private Formatter messageFormatter;
+
+    private static Map<String, Formatter> formatters =
+            Map.of(
+                    "en-GB", new Formatter(Locale.UK),
+                    "en-US", new Formatter(Locale.US)
+            );
 
     public ProductFactory(Locale locale) {
-        this.locale = locale;
-        resources = ResourceBundle.getBundle("resources", locale);
-        dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).localizedBy(locale);
-        moneyFormat = NumberFormat.getCurrencyInstance(locale);
+        this(locale.toLanguageTag()); //vai chamar o construtor de baixo 'public ProductFactory(String languageTag) '
     }
 
-    public Product createProduct(int id, String name, BigDecimal price, Rating rating) {
-        Product product = new Drink(id, name, price, rating);
-        products.putIfAbsent(product, new ArrayList<>());
-        return product;
+    public ProductFactory(String languageTag) {
+        changeLocale(languageTag);
+    }
+
+    public void changeLocale(String languageTag) {
+        messageFormatter = formatters.getOrDefault(languageTag, formatters.get(new Locale("pt-BR")));
+
+    }
+
+
+    public static Set<String> getSupportedLocales() {
+        return formatters.keySet();
     }
 
     public Product createProduct(int id, String name, BigDecimal price, LocalDate bestBefore, Rating rating) {
         Product product = new Food(id, name, price, bestBefore, rating);
+        products.putIfAbsent(product, new ArrayList<>());
+        return product;
+    }
+
+    public Product createProduct(int id, String name, BigDecimal price, Rating rating) {
+        Product product = new Drink(id, name, price, rating);
         products.putIfAbsent(product, new ArrayList<>());
         return product;
     }
@@ -54,23 +63,18 @@ public class ProductFactory {
 
     public void printProductReport(Product product) {
         StringBuilder txt = new StringBuilder();
+        List<Review> reviews = products.get(product);
 
-        txt.append(MessageFormat.format(resources.getString("product"),
-                product.getName(),
-                moneyFormat.format(product.getPrice()),
-                product.getRating().getStars(),
-                dateFormat.format(product.getBestBefore())));
+        txt.append(messageFormatter.formatProduct(product));
+
         txt.append("\n");
-
-        List<Review> reviewList = products.get(product);
-        for (Review review : reviewList) {
-            txt.append(MessageFormat.format(resources.getString("review"),
-                    review.getRating().getStars(),
-                    review.getComments()));
+        Collections.sort(reviews);
+        for (Review review : reviews) {
+            txt.append(messageFormatter.formatReviews(review));
             txt.append("\n");
         }
-        if (reviewList.size() == 0) {
-            txt.append(resources.getString("no.reviews"));
+        if (reviews.size() == 0) {
+            txt.append(messageFormatter.getText("no.reviews"));
             txt.append("\n");
         }
         System.out.println(txt);

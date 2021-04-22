@@ -10,7 +10,7 @@ import java.util.Locale;
 public class Main {
 
     public static void main(String[] args) {
-        ProductFactory pm = new ProductFactory(new Locale("pt", "BR"));
+        ProductFactory pm = new ProductFactory(new Locale("en-US"));
 
 
         pm.createProduct(101, "Toddynho", new BigDecimal("2.00"), Rating.NOT_RATED);
