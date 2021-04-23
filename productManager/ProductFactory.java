@@ -7,7 +7,7 @@ import java.util.*;
 public class ProductFactory {
 
     private HashMap<Product, List<Review>> products = new HashMap<>();
-    private Formatter messageFormatter;
+    private Formatter messageFormatter = new Formatter(Locale.US);
 
     private static Map<String, Formatter> formatters =
             Map.of(
@@ -57,14 +57,25 @@ public class ProductFactory {
         return result;
     }
 
+    public void printProducs(Comparator<Product> sorter) {
+        List<Product> productList = new ArrayList<>(products.keySet());
+        productList.sort(sorter);
+        StringBuilder txt = new StringBuilder();
+        for (Product product: productList){
+            txt.append(messageFormatter.formatProduct(product));
+            txt.append('\n');
+
+        }
+    }
+
     public void printProductReport(int id) {
         printProductReport(findById(id));
     }
 
     public void printProductReport(Product product) {
-        StringBuilder txt = new StringBuilder();
-        List<Review> reviews = products.get(product);
 
+        List<Review> reviews = products.get(product);
+        StringBuilder txt = new StringBuilder();
         txt.append(messageFormatter.formatProduct(product));
 
         txt.append("\n");
