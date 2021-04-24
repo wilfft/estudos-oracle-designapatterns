@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ProductFactoryEstudo {
-    //  private Product product;
+   /* //  private Product product;
 
     private Locale locale;
     private ResourceBundle resources;
@@ -43,7 +43,7 @@ public class ProductFactoryEstudo {
 
         return null;
     }
-
+*/
 }
 
 

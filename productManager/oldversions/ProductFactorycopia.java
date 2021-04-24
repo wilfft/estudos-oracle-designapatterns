@@ -11,7 +11,7 @@ import java.time.format.FormatStyle;
 import java.util.*;
 
 public class ProductFactorycopia {
-    //  private Product product;
+ /*   //  private Product product;
     private Map<Product, List<Review>> products = new HashMap<>();
 
     private Locale locale;
@@ -52,7 +52,7 @@ public class ProductFactorycopia {
         products.remove(product);
         //adicionando a lista de avaliaçoes
         reviews.add(new Review(rating, comments));
-      /*  product = product.applyRating(rating);
+      product = product.applyRating(rating);
         if (reviews[reviews.length - 1] != null) {
             reviews = Arrays.copyOf(reviews, reviews.length + 5);
         boolean reviewed = false;
@@ -61,7 +61,7 @@ public class ProductFactorycopia {
                 reviews[i] = new Review(rating, comments);
                 reviewed = true;
         int i = 0, sum = 0;
-        sum += reviews[i].getRating().ordinal();  }*/
+        sum += reviews[i].getRating().ordinal();  }
         //calculando o total dos ratingos e depois aplicando a média
         int sum = 0;
         for (Review review : reviews) {
@@ -117,7 +117,7 @@ public class ProductFactorycopia {
             }
         }
         return result;
-    }
+    }*/
 
 }
 

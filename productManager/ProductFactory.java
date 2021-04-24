@@ -57,7 +57,7 @@ public class ProductFactory {
         return result;
     }
 
-    public void printProducs(Comparator<Product> sorter) {
+    public void printProducts(Comparator<Product> sorter) {
         List<Product> productList = new ArrayList<>(products.keySet());
         productList.sort(sorter);
         StringBuilder txt = new StringBuilder();

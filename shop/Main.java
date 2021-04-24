@@ -5,6 +5,7 @@ import com.william.myproject.productManager.ProductFactory;
 import com.william.myproject.productManager.Rating;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Locale;
 
 public class Main {
@@ -14,26 +15,26 @@ public class Main {
 
 
         pm.createProduct(101, "Toddynho", new BigDecimal("2.00"), Rating.NOT_RATED);
-        pm.createProduct(102, "Arroz", new BigDecimal("4.00"), Rating.NOT_RATED);
+        pm.createProduct(102, "Arroz", BigDecimal.valueOf(4.00), Rating.NOT_RATED);
         pm.createProduct(103, "Coca cola", new BigDecimal("4.00"), Rating.NOT_RATED);
         pm.createProduct(104, "Leite", new BigDecimal("4.00"), Rating.NOT_RATED);
 
 
-
         pm.reviewProduct(102, Rating.ONE_STAR, "Niicee");
-        pm.reviewProduct(102, Rating.ONE_STAR, "Woowww");
-        pm.reviewProduct(102, Rating.FOUR_START, "Niicee");
+        pm.reviewProduct(104, Rating.ONE_STAR, "Woowww");
+        pm.reviewProduct(104, Rating.FOUR_START, "Niicee");
 
         pm.reviewProduct(102, Rating.FOUR_START, "Niicee");
         pm.reviewProduct(102, Rating.FOUR_START, "Niicee");
 
-        pm.reviewProduct(103, Rating.ONE_STAR, "Niicee");
+        pm.reviewProduct(101, Rating.ONE_STAR, "Niicee");
         pm.reviewProduct(103, Rating.FIVE_START, "Woowww");
 
+        Comparator<Product> ratingSorter = (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
+        Comparator<Product> priceorter = (p1, p2) -> p2.getPrice().compareTo(p1.getPrice());
 
-pm.printProductReport(102);
 
-
+        pm.printProducts(ratingSorter.thenComparing(priceorter).reversed());
 
 
     /*    //     Product p1 = pm.createProduct(101, "Toddynho", new BigDecimal("2.00"), Rating.NOT_RATED);
