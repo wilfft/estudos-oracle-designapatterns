@@ -6,6 +6,7 @@ public abstract class PizzaStoreFactory {
         Pizza pizza;
         pizza = criarPizza(tipo);
         pizza.preparar();
+        pizza.voila();
         return pizza;
     }
 

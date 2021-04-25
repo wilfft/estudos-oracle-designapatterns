@@ -4,7 +4,7 @@ public class BRPizzaStore extends PizzaStoreFactory {
 
     public Pizza criarPizza(String tipo) {
         Pizza pizza = null;
-        if (tipo.equals("chesse")) {
+        if (tipo.equals("queijo")) {
             pizza = new BRPizzaQueijo();
         } else if (tipo.equals("calabreza")) {
             pizza = new BRPizzaCalabreza();
